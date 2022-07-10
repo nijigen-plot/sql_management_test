@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "sql_management_test"
+version = "0.1.0"
+description = ""
+authors = ["None"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+black = "^22.6.0"
+pyproject-flake8 = "^0.0.1-alpha.4"
+isort = "^5.10.1"
+google-api-python-client = "^2.52.0"
+google-auth-httplib2 = "^0.1.0"
+google-auth-oauthlib = "^0.5.2"
+
+[tool.poetry.dev-dependencies]
+ipykernel = "^6.15.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 119
+
+[tool.flake8]
+max-line-length = 119
+extend-ignore = "E203"
+exclude = ".venv"
+
+[tool.isort]
+profile = "black"
