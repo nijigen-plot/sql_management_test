@@ -92,8 +92,29 @@ class googleDriveSync:
             else:
                 self.create_file(file_directory=directory, file_name=split_directory[i], parent_id=parent_id)
 
+    # ファイルを削除する
+    def file_delete(self):
+        results = (
+            self.service.files()
+            .list(q=f"'{self.sync_folder_id}' in parents", fields="nextPageToken, files(id, name)")
+            .execute()
+        )
+        items = results.get("files", [])
+        if not items:
+            print("delete file not found.")
+            return
+        try:
+            for item in items:
+                self.service.files().delete(fileId=item["id"]).execute()
+            print("sync preference completed.")
+        except HttpError as error:
+            print(f"An error occurred: {error}")
+
     # sqlファイルを同期する
     def sync(self):
+        # 既にあるファイルはまとめて削除する
+        self.file_delete()
+        # ファイルを配置
         for target_directory in self.upload_target_data:
             print(target_directory)
             self.create_flow(target_directory)
