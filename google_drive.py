@@ -15,7 +15,7 @@ class googleDriveSync:
         self.upload_target_data = upload_target_data
         # 環境変数からcredentials情報を作成
         target_env = os.environ.get("GCP_SERVICE_ACCOUNT_KEY")
-        if target_env == None:
+        if target_env is None:
             raise KeyError("GCP_SERVICE_ACCOUNT_KEY environment not cound.")
         else:
             credentials_json = eval(base64.b64decode(target_env))
