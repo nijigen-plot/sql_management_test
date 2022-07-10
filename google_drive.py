@@ -52,7 +52,11 @@ class googleDriveSync:
     # フォルダを作成する
     def create_folder(self, folder_name: str):
         try:
-            file_metadata = {"title": folder_name, "mimeType": "application/vnd.google-apps.folder"}
+            file_metadata = {
+                "name": folder_name,
+                "mimeType": "application/vnd.google-apps.folder",
+                "parents": [self.sync_folder_id],
+            }
 
             file = self.service.files().create(body=file_metadata, fields="id").execute()
 
@@ -63,13 +67,13 @@ class googleDriveSync:
         return file.get("id")
 
     # ファイルを作成する
-    def create_file(self, file_name: str, parent_id=None):
+    def create_file(self, file_directory: str, file_name: str, parent_id=None):
         # parend_idの指定がない場合は、指定フォルダ直下
-        if parent_id == None:
-            parent_id = self.gd_target_folder_id
+        if parent_id is None:
+            parent_id = self.sync_folder_id
         try:
             file_metadata = {"name": file_name, "parents": [parent_id]}
-            media = MediaFileUpload(file_name, minetype="text/x-sql", resumable=True)
+            media = MediaFileUpload(file_directory, mimetype="text/x-sql", resumable=True)
             file = self.service.files().create(body=file_metadata, media_body=media, fields="id").execute()
             print(f'File with ID: "{file.get("id")}" has added to the folder with ' f'ID "{parent_id}".')
         except HttpError as error:
@@ -86,9 +90,10 @@ class googleDriveSync:
             if i + 1 < directory_length:
                 parent_id = self.create_folder(folder_name=split_directory[i])
             else:
-                self.create_file(file_name=split_directory[i], parent_id=parent_id)
+                self.create_file(file_directory=directory, file_name=split_directory[i], parent_id=parent_id)
 
     # sqlファイルを同期する
     def sync(self):
         for target_directory in self.upload_target_data:
+            print(target_directory)
             self.create_flow(target_directory)
