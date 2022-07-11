@@ -2,3 +2,5 @@ SELECT
   *
 FROM
   test_20220711
+WHERE
+  id = 7
