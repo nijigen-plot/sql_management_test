@@ -15,7 +15,8 @@ def main():
     # GDS.sync()
     # 指定フォルダ内のファイルを消したいだけの場合以下を実行する
     # GDS.file_delete()
-    notificationDiffFilesToSlack()
+    NDFTS = notificationDiffFilesToSlack(channel_id="C03NHHQS62K")
+    NDFTS.send()
 
 
 if __name__ == "__main__":
