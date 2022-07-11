@@ -1,4 +1,4 @@
-name: Google Drive テンプレート同期実行
+name: Google Drive テンプレート同期&通知実行
 on:
   push:
     branches:
@@ -12,6 +12,10 @@ jobs:
     timeout-minutes: 60
     env:
       GCP_SERVICE_ACCOUNT_KEY: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      SLACK_OAUTH_TOKEN: ${{ secrets.SLACK_OAUTH_TOKEN }}
+      OWNER: nijigen-plot
+      REPOSITORY: sql_management_test
 
     steps:
       - uses: actions/checkout@v3
@@ -22,4 +26,6 @@ jobs:
           python-version: '3.9.11'
       - run: pip install poetry==1.2.0b1
       - run: poetry install
+      - run: apt install -y jq
       - run: poetry run python main.py
+      

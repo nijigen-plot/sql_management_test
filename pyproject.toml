@@ -12,6 +12,7 @@ isort = "^5.10.1"
 google-api-python-client = "^2.52.0"
 google-auth-httplib2 = "^0.1.0"
 google-auth-oauthlib = "^0.5.2"
+slack-sdk = "^3.17.2"
 
 [tool.poetry.dev-dependencies]
 ipykernel = "^6.15.1"
