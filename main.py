@@ -10,9 +10,9 @@ SYNC_TARGET_FOLDER = "sql_template"
 
 def main():
     # sql_template内のファイルを同期する
-    # target = search_upload_files.search(SYNC_TARGET_FOLDER)
-    # GDS = googleDriveSync(gd_target_folder_id=GOOGLE_DRIVE_TARGET_ID, upload_target_data=target)
-    # GDS.sync()
+    target = search_upload_files.search(SYNC_TARGET_FOLDER)
+    GDS = googleDriveSync(gd_target_folder_id=GOOGLE_DRIVE_TARGET_ID, upload_target_data=target)
+    GDS.sync()
     # 指定フォルダ内のファイルを消したいだけの場合以下を実行する
     # GDS.file_delete()
     NDFTS = notificationDiffFilesToSlack(channel_id="C03NHHQS62K")
