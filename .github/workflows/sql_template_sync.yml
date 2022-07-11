@@ -26,6 +26,6 @@ jobs:
           python-version: '3.9.11'
       - run: pip install poetry==1.2.0b1
       - run: poetry install
-      - run: apt install -y jq
+      - run: sudo apt install -y jq
       - run: poetry run python main.py
       
